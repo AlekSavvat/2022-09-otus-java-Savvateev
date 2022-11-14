@@ -13,6 +13,7 @@ public class TestRunner {
     public TestRunner(Class<?> clazz){
         this.clazz = clazz;
     }
+
     public void runner(){
         System.out.println("Class Name:" + clazz.getSimpleName());
         parser();
@@ -24,6 +25,7 @@ public class TestRunner {
 
         System.out.println(String.format("Total: %d, success: %d, fail: %d", test.size(), success, fail));
     }
+
     private void parser(){
         for(Method method: clazz.getDeclaredMethods()){
             if(method.isAnnotationPresent(Before.class)){
@@ -35,6 +37,7 @@ public class TestRunner {
             }
         }
     }
+
     private void execute( Method testMethod){
         Object instanceClass  = ReflectionHelper.instantiate(clazz);
         try{
