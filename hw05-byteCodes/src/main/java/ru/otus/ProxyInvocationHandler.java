@@ -14,8 +14,8 @@ class ProxyInvocationHandler implements InvocationHandler {
 
         for (Method method : clazz.getClass().getMethods()) {
             if (method.isAnnotationPresent(Log.class))
-                // т.к. invoke получает в качестве параметра method интерфейса
-                // нельзя просто сравнивать его с списком аннотированных методов из класса
+                // С‚.Рє. invoke РїРѕР»СѓС‡Р°РµС‚ РІ РєР°С‡РµСЃС‚РІРµ РїР°СЂР°РјРµС‚СЂР° method РёРЅС‚РµСЂС„РµР№СЃР°
+                // РЅРµР»СЊР·СЏ РїСЂРѕСЃС‚Рѕ СЃСЂР°РІРЅРёРІР°С‚СЊ РµРіРѕ СЃ СЃРїРёСЃРєРѕРј Р°РЅРЅРѕС‚РёСЂРѕРІР°РЅРЅС‹С… РјРµС‚РѕРґРѕРІ РёР· РєР»Р°СЃСЃР°
                 listLogMethod.add(getMethodFromInterface(method));
         }
     }
@@ -29,7 +29,7 @@ class ProxyInvocationHandler implements InvocationHandler {
         return method.invoke(clazz, args);
     }
 
-    //получаем ссылку на метод из интерфейса
+    //РїРѕР»СѓС‡Р°РµРј СЃСЃС‹Р»РєСѓ РЅР° РјРµС‚РѕРґ РёР· РёРЅС‚РµСЂС„РµР№СЃР°
     private Method getMethodFromInterface(Method method){
         try{
             return MyInterface.class.getDeclaredMethod(method.getName(),method.getParameterTypes());

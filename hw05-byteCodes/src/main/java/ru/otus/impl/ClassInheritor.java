@@ -1,5 +1,5 @@
 package ru.otus.impl;
-/* наследник первого класса*/
+/* РЅР°СЃР»РµРґРЅРёРє РїРµСЂРІРѕРіРѕ РєР»Р°СЃСЃР°*/
 import ru.otus.Log;
 
 public class ClassInheritor extends FirstClass {

@@ -1,5 +1,5 @@
 package ru.otus.impl;
-/* первая реализация интерфейса*/
+/* РїРµСЂРІР°СЏ СЂРµР°Р»РёР·Р°С†РёСЏ РёРЅС‚РµСЂС„РµР№СЃР°*/
 import ru.otus.Log;
 import ru.otus.MyInterface;
 
