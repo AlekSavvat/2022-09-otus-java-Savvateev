@@ -6,8 +6,8 @@ import ru.otus.CustomInteger;
 import java.util.Map;
 
 public interface IOperator {
+    
+    void receive(Map<Banknot, Integer> mapOfBanknots);
 
-    void receive(Map<Banknot, CustomInteger> mapOfBanknots);
-
-    Map<Banknot, CustomInteger> give(Integer sum);
+    Map<Banknot, Integer> give(Integer sum);
 }

@@ -16,15 +16,11 @@ public class ATM {
         this.operator = new Operator(container);
     }
 
-//    public void receive(Collection<Banknot> banknotes) {
-//        operator.receive(banknotes);
-//    }
-
-    public void receive(Map<Banknot, CustomInteger> banknotes) {
+    public void receive(Map<Banknot, Integer> banknotes) {
         operator.receive(banknotes);
     }
 
-    public Map<Banknot, CustomInteger> give(Integer sum) {
+    public Map<Banknot, Integer> give(Integer sum) {
         return operator.give(sum);
     }
 

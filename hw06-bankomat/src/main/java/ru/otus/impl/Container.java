@@ -13,7 +13,7 @@ public class Container implements IContainer {
         moneyBox.put(banknot, getCountBanknots(banknot).getValue() + count.getValue());
     }
 
-    public Map<Banknot, CustomInteger> extract(Banknot banknot, CustomInteger count) {
+    private Map<Banknot, CustomInteger> extract(Banknot banknot, CustomInteger count) {
         if(moneyBox.getOrDefault(banknot,0) < count.getValue())
             throw  new IllegalArgumentException("Not enough banknots");
 

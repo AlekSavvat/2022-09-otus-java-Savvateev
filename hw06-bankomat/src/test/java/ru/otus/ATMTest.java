@@ -3,15 +3,12 @@ package ru.otus;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import java.util.List;
 import java.util.Map;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatExceptionOfType;
 import static ru.otus.Banknot.*;
 
-
-import ru.otus.*;
 
 class ATMTest {
 
@@ -36,14 +33,18 @@ class ATMTest {
     }
 
     @Test
-    void receiveCollectionOfBanknotes() {
-        var expected = Map.of(
-                BANKNOTE_50, 2,
+    void receiveRequestIllegalAmountBanknot() {
+        var moneyMap = Map.of(
+                BANKNOTE_50, 1,
                 BANKNOTE_100, 1,
-                BANKNOTE_500, 2
+                BANKNOTE_500, -1,
+                BANKNOTE_1000, 1,
+                BANKNOTE_5000, 1
         );
-        atm.receive(List.of(BANKNOTE_50, BANKNOTE_50, BANKNOTE_100, BANKNOTE_500, BANKNOTE_500));
-        assertThat(atm.getBalanceAsMap()).isEqualTo(expected);
+        //atm.receive(moneyMap);
+
+        assertThatExceptionOfType(IllegalArgumentException.class)
+                .isThrownBy(() -> atm.receive(moneyMap));
     }
 
     @Test
@@ -59,17 +60,17 @@ class ATMTest {
 
         var expectedMoney = Map.of(
                 BANKNOTE_50, 1,
+                BANKNOTE_100, 1,
                 BANKNOTE_500, 1
         );
-        assertThat(atm.give(550)).isEqualTo(expectedMoney);
+        assertThat(atm.give(650)).isEqualTo(expectedMoney);
 
         var expectedHolder = Map.of(
                 BANKNOTE_50, 0,
-                BANKNOTE_100, 1,
+                BANKNOTE_100, 0,
                 BANKNOTE_500, 0,
                 BANKNOTE_1000, 1,
-                BANKNOTE_5000, 1
-        );
+                BANKNOTE_5000, 1 );
         assertThat(atm.getBalanceAsMap()).isEqualTo(expectedHolder);
     }
 
@@ -84,7 +85,7 @@ class ATMTest {
         );
         atm.receive(moneyMap);
 
-        assertThatExceptionOfType(IllegalArgumentException.class)
+        assertThatExceptionOfType(RuntimeException.class)
                 .isThrownBy(() -> atm.give(8000));
     }
 
@@ -112,8 +113,8 @@ class ATMTest {
     }
 
     @Test
-    void balanceAsStringWithEmptyATM() {
-        assertThat(atm.getBalanceAsString()).isEqualTo("{}");
+    void balanceWithEmptyATM() {
+        assertThat(atm.getBalance()).isEqualTo(0);
     }
 
     @Test
@@ -126,6 +127,6 @@ class ATMTest {
                 BANKNOTE_5000, 1
         );
         atm.receive(moneyMap);
-        assertThat(atm.getBalanceAsString()).isNotBlank();
+        assertThat(atm.getBalance()).isEqualTo(6650);;
     }
 }
