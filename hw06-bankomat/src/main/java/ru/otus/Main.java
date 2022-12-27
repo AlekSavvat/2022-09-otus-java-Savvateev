@@ -23,6 +23,13 @@ public class Main {
         );
 
         operator.receive(moneyMap);
-        System.out.println(container.getBalanceAsString());
+
+        operator.receive(moneyMap);
+        operator.give(900);
+        System.out.println(container.getBalance());
+
+//        var balanceBanknot = container.getBalanceAsMap();
+        System.out.println( container.getBalanceAsMap().toString());
+
     }
 }

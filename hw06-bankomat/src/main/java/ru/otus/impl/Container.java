@@ -39,10 +39,12 @@ public class Container implements IContainer {
         return new CustomInteger(moneyBox.getOrDefault(banknot,0));
     }
 
-//    public int getBalance(){
-//        moneyBox.entrySet().stream().
-//        return moneyBox.toString();
-//    }
+    public Integer getBalance(){
+        return moneyBox.entrySet()
+                .stream()
+                .map(x -> x.getValue()*x.getKey().getValue())
+                .reduce(0,Integer::sum);
+    }
 
     public Map<Banknot, Integer> getBalanceAsMap(){
         return Map.copyOf(moneyBox);

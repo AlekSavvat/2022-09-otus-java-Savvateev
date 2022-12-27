@@ -9,5 +9,5 @@ public interface IOperator {
 
     void receive(Map<Banknot, CustomInteger> mapOfBanknots);
 
-    Map<Banknot, CustomInteger> give(CustomInteger sum);
+    Map<Banknot, CustomInteger> give(Integer sum);
 }

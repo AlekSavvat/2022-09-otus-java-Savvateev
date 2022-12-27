@@ -19,9 +19,8 @@ public class Operator implements IOperator {
         mapOfBanknots.forEach(container::put);
     }
 
-
-    public Map<Banknot, CustomInteger> give(CustomInteger sum){
-        var calculatedBanknots = calculate(sum);
+    public Map<Banknot, CustomInteger> give(Integer sum){
+        var calculatedBanknots = calculate(new CustomInteger(sum));
         return container.extract(calculatedBanknots);
     }
 

@@ -18,6 +18,7 @@ public interface IContainer {
 
     CustomInteger getCountBanknots(Banknot banknot);
 
-    String getBalanceAsString();
-    //
+    Integer getBalance();
+
+    Map<Banknot, Integer> getBalanceAsMap();
 }
