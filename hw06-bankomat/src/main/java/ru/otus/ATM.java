@@ -1,22 +1,25 @@
 package ru.otus;
 
 import ru.otus.interfaces.IContainer;
-import ru.otus.interfaces.IOperator;
+import ru.otus.interfaces.ICalcCash;
 import ru.otus.impl.Container;
-import ru.otus.impl.Operator;
+import ru.otus.impl.CalcCash;
 
 import java.util.*;
 
 public class ATM {
     private final IContainer container;
-    private final IOperator operator;
+    private final ICalcCash operator;
 
     public ATM() {
         this.container = new Container();
-        this.operator = new Operator(container);
+        this.operator = new CalcCash(container);
     }
 
     public void receive(Map<Banknot, Integer> banknotes) {
+        operator.receive(banknotes);
+    }
+    public void receive(List<Banknot> banknotes) {
         operator.receive(banknotes);
     }
 

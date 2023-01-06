@@ -3,6 +3,7 @@ package ru.otus;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import java.util.List;
 import java.util.Map;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -11,7 +12,6 @@ import static ru.otus.Banknot.*;
 
 
 class ATMTest {
-
     private ATM atm;
 
     @BeforeEach
@@ -33,6 +33,19 @@ class ATMTest {
     }
 
     @Test
+    void receiveList() {
+        var expectedMap = Map.of(
+                BANKNOTE_50, 2,
+                BANKNOTE_100, 2,
+                BANKNOTE_500, 1
+        );
+
+        atm.receive(List.of(BANKNOTE_50, BANKNOTE_100,BANKNOTE_50,BANKNOTE_500, BANKNOTE_100));
+
+        assertThat(atm.getBalanceAsMap()).isEqualTo(expectedMap);
+    }
+
+    @Test
     void receiveRequestIllegalAmountBanknot() {
         var moneyMap = Map.of(
                 BANKNOTE_50, 1,
@@ -41,8 +54,7 @@ class ATMTest {
                 BANKNOTE_1000, 1,
                 BANKNOTE_5000, 1
         );
-        //atm.receive(moneyMap);
-
+        
         assertThatExceptionOfType(IllegalArgumentException.class)
                 .isThrownBy(() -> atm.receive(moneyMap));
     }
