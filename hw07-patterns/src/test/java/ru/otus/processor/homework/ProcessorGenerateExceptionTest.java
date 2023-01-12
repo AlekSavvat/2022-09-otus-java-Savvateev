@@ -5,6 +5,7 @@ import org.junit.jupiter.api.Test;
 import ru.otus.model.Message;
 
 import java.time.LocalDateTime;
+import java.util.Date;
 
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.junit.jupiter.api.Assertions.assertThrows;
@@ -13,8 +14,7 @@ public class ProcessorGenerateExceptionTest {
     @Test
     @DisplayName("Testing process in odd second")
     void oddSecTest(){
-        var processor = new ProcessorGenerateException(
-                LocalDateTime.of(2023, 1, 8, 17, 31, 1));
+        var processor = new ProcessorGenerateException(() -> LocalDateTime.of(2023, 1, 8, 17, 31, 13));
         var message = new Message.Builder(1L).build();
         assertDoesNotThrow(() -> processor.process(message));
     }
@@ -22,7 +22,7 @@ public class ProcessorGenerateExceptionTest {
     @Test
     @DisplayName("Testing process in even second")
     void EvenSecTest(){
-        var processor = new ProcessorGenerateException(
+        var processor = new ProcessorGenerateException(() ->
                 LocalDateTime.of(2023, 1, 8, 17, 31, 0));
         var message = new Message.Builder(1L).build();
         assertThrows(RuntimeException.class,

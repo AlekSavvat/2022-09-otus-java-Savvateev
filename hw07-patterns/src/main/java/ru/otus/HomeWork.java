@@ -32,7 +32,7 @@ public class HomeWork {
          */
         var processors = List.of(
             new ProcessorSwapFields(),
-            new ProcessorGenerateException(LocalDateTime.of(2023,1,9,0,36,2))
+            new ProcessorGenerateException(() -> LocalDateTime.now())
         );
 
         var complexProcessor = new ComplexProcessor(processors

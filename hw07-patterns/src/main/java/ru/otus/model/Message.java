@@ -1,6 +1,8 @@
 package ru.otus.model;
 
-public class Message {
+import java.util.ArrayList;
+
+public class Message implements Cloneable {
     private final long id;
     private final String field1;
     private final String field2;
@@ -132,6 +134,7 @@ public class Message {
                 '}';
     }
 
+    /*pattern Builder*/
     public static class Builder {
         private final long id;
         private String field1;
@@ -241,4 +244,15 @@ public class Message {
                     , field8, field9, field10, field11, field12, field13);
         }
     }
+
+    /*pattern Prototype*/
+    public Message clone() {
+        return new Message(
+            this.id, this.field1, this.field2, this.field3, this.field4, this.field5
+            , this.field6, this.field7, this.field8, this.field9, this.field10, this.field11, this.field12
+            , this.field13 == null ? null : field13.copy()
+        );
+
+    }
+
 }

@@ -1,6 +1,5 @@
 package ru.otus.listener.homework;
 
-import org.jetbrains.annotations.NotNull;
 import ru.otus.listener.Listener;
 import ru.otus.model.Message;
 
@@ -13,8 +12,9 @@ public class HistoryListener implements Listener, HistoryReader {
     private final Map<Long, Message> journal = new HashMap<>();
     @Override
     public void onUpdated(Message msg) {
-        if(Objects.nonNull(msg))
-            journal.put(msg.getId(), msg.toBuilder().build());
+        if(Objects.nonNull(msg)) {
+            journal.put(msg.getId(), msg.clone());
+        }
     }
 
     @Override
