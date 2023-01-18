@@ -3,19 +3,21 @@ package ru.otus.dataprocessor;
 import ru.otus.model.Measurement;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 public class ProcessorAggregator implements Processor {
 
     @Override
     public Map<String, Double> process(List<Measurement> data) {
         //группирует выходящий список по name, при этом суммирует поля value
-        final Map<String,Double> result_map = new TreeMap<String,Double>();
+        try {
+            var resultMap =  data.stream()
+                    .collect(Collectors.groupingBy(Measurement::getName
+                            , Collectors.summingDouble(Measurement::getValue)));
 
-        for(Measurement item: data){
-            result_map.put(item.getName()
-                    , result_map.getOrDefault(item.getName(),0D) + item.getValue());
+            return new TreeMap<String, Double>(resultMap);
+        }catch (Exception ex){
+            throw new FileProcessException(ex);
         }
-
-        return result_map;
     }
 }
