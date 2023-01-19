@@ -22,6 +22,8 @@ allprojects {
                 mavenBom "com.google.protobuf:protobuf-bom:3.21.1"
             }
             dependency "com.google.guava:guava:${Versions.guava}"
+//            dependency("org.glassfish:javax.json:${Versions.glassfishJson}")
+//            dependency("com.google.protobuf:protobuf-java-util:${Versions.protobuf}")
             dependency "org.openjdk.jmh:jmh-core:${Versions.jmh}"
             dependency "org.openjdk.jmh:jmh-generator-annprocess:${Versions.jmh}"
         }
@@ -44,13 +46,13 @@ allprojects {
     }
 }
 
-task managedVersions {
-    doLast {
-        dependencyManagement.managedVersions.each {
-            println it
-        }
-    }
-}
+//task managedVersions {
+//    doLast {
+//        dependencyManagement.managedVersions.each {
+//            println it
+//        }
+//    }
+//}
 
 //gradle -q hello
 //task hello {
