@@ -37,8 +37,8 @@ public class Homework {
 ///
         var dbServiceClient = new DbServiceClientImpl(transactionManager, clientTemplate);
         dbServiceClient.saveClient(new Client(null,"dbServiceFirst", new Address(null, "AnyStreet")
-                , List.of(new Phone(null, "13-555-22"),
-                new Phone(null, "14-666-333") )));
+                , List.of(new Phone(null, "13-555-22"),new Phone(null, "14-666-333") )
+        ));
 
         var clientSecond = dbServiceClient.saveClient(
                 new Client(null, "dbServiceSecond", new Address(null, "AnotherStreet")
@@ -50,7 +50,9 @@ public class Homework {
 ///
         Client clientCloned = clientSecond.clone();
         clientCloned.setName("dbServiceSecondUpdated");
-        //clientCloned.setPhones(null);
+//        clientCloned.setPhones(null);
+        clientCloned.setPhones(List.of(new Phone(null, "13-575-144"),
+                new Phone(null, "21-576-844")));
         dbServiceClient.saveClient(clientCloned);
         var clientUpdated = dbServiceClient.getClient(clientSecondSelected.getId())
                 .orElseThrow(() -> new RuntimeException("Client not found, id:" + clientSecondSelected.getId()));

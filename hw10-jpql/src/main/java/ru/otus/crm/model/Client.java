@@ -3,7 +3,7 @@ package ru.otus.crm.model;
 import jakarta.persistence.*;
 import lombok.*;
 
-import java.util.List;
+import java.util.*;
 
 @Getter
 @Setter
@@ -26,6 +26,7 @@ public class Client implements Cloneable {
     private Address address;
 
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, orphanRemoval = true, mappedBy = "client")
+    @Setter(AccessLevel.NONE)
     private List<Phone> phones;
 
     public Client(String name) {
@@ -43,9 +44,23 @@ public class Client implements Cloneable {
         this.id = id;
         this.name = name;
         this.address = address;
-        this.phones = phones;
 
         if (phones != null) {
+            this.phones = new ArrayList<Phone>();
+            this.phones.addAll(phones);
+            phones.forEach(phone -> phone.setClient(this));
+        }
+    }
+
+    public void setPhones(List<Phone> phones) {
+        if(phones == null) {
+            if (!this.phones.isEmpty()){
+                this.phones.clear();
+            }
+        }
+        else {
+            this.phones = new ArrayList<Phone>();
+            this.phones.addAll(phones);
             phones.forEach(phone -> phone.setClient(this));
         }
     }
