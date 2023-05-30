@@ -16,12 +16,15 @@ public class DbServiceClientWithCache implements DBServiceClient {
     private final DataTemplate<Client> dataTemplate;
     private final TransactionRunner transactionRunner;
 
-    private final MyCache<Long, Client> cache = new MyCache<>();
+    private final HwCache<Long, Client> cache;
 
     public DbServiceClientWithCache(TransactionRunner transactionRunner,
-                                        DataTemplate<Client> dataTemplate) {
+                                        DataTemplate<Client> dataTemplate,
+                                    HwCache<Long, Client> cache
+                                    ) {
         this.transactionRunner = transactionRunner;
         this.dataTemplate = dataTemplate;
+        this.cache = cache;
     }
 
     @Override
