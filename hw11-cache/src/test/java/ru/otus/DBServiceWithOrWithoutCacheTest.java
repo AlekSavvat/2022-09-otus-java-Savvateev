@@ -7,6 +7,7 @@ import org.junit.jupiter.params.provider.ValueSource;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import ru.otus.cachehw.DbServiceClientWithCache;
+import ru.otus.cachehw.MyCache;
 import ru.otus.core.repository.executor.DbExecutorImpl;
 import ru.otus.core.sessionmanager.TransactionRunnerJdbc;
 import ru.otus.crm.datasource.DriverManagerDataSource;
@@ -43,7 +44,8 @@ class DBServiceWithOrWithoutCacheTest {
         EntitySQLMetaData entitySQLMetaDataClient = new EntitySQLMetaDataImpl(entityClassMetaDataClient);
         var dataTemplateClient = new DataTemplateJdbc<>(dbExecutor,  entitySQLMetaDataClient, entityClassMetaDataClient);
 
-        this.serviceWithCache = new DbServiceClientWithCache(transactionRunner, dataTemplateClient);
+        this.serviceWithCache = new DbServiceClientWithCache(transactionRunner, dataTemplateClient
+                , new MyCache<>());
         this.serviceWithoutCache = new DbServiceClientImpl(transactionRunner, dataTemplateClient);
     }
 
