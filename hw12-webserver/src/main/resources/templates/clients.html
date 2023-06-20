@@ -1,0 +1,91 @@
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+    <title>Клиенты</title>
+    <style>
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        th,
+        td {
+            padding: 8px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+
+        th {
+            background-color: #f2f2f2;
+        }
+
+        form {
+            margin-bottom: 20px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        input[type="text"] {
+            width: 400px;
+            padding: 8px;
+            border-radius: 4px;
+            border: 1px solid #ccc;
+        }
+
+        input[type="submit"] {
+            background-color: #4CAF50;
+            color: white;
+            padding: 8px 16px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        input[type="submit"]:hover {
+            background-color: #45a049;
+        }
+    </style>
+</head>
+
+<body>
+    <h4>Список клиентов</h4>
+    <a href="client" target="_blank">Обновить</a>
+    <table>
+        <thead>
+        <tr>
+            <td style="width: 50px">Id</td>
+            <td style="width: 150px">Имя</td>
+            <td style="width: 200px">Адрес</td>
+            <td style="width: 200px">Телефоны</td>
+        </tr>
+        </thead>
+        <tbody>
+        <#list clients as client>
+        <tr>
+            <td>${client.id}</td>
+            <td>${client.name}</td>
+            <td>${client.address}</td>
+            <td>${client.phones}</td>
+        </tr>
+        </#list>
+        </tbody>
+    </table>
+
+    <h4>Создать нового клиента</h4>
+    <form action="client" method="post">
+        <label for="client-name">Имя:</label>
+        <input type="text" name="name" id="client-name" required>
+        <label for="client-address">Адрес:</label>
+        <input type="text" name="address" id="client-address" required>
+        <label for="client-phones">Телефон:</label>
+        <input type="text" name="phones" id="client-phones" required>
+        <br /><br />
+        <input type="submit" value="Создать">
+    </form>
+
+</body>
+
+</html>
