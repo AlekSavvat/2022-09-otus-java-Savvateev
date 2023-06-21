@@ -17,12 +17,16 @@ import ru.otus.services.IAuthService;
 import ru.otus.services.TemplateProcessor;
 import ru.otus.services.TemplateProcessorImpl;
 
+import java.util.List;
+
 /*
     // Стартовая страница
     http://localhost:8080
 
     // Клиенты
     http://localhost:8080/api/client
+    // Логин: admin
+    // Пароль: pwd
 */
 public class WebServerWithFilterBasedSecurity {
     private static final int WEB_SERVER_PORT = 8080;
@@ -32,6 +36,7 @@ public class WebServerWithFilterBasedSecurity {
 
     public static void main(String[] args) throws Exception {
         DBServiceClient dbServiceClient = setUpClientService();
+        initClients(dbServiceClient);
         TemplateProcessor templateProcessor = new TemplateProcessorImpl(TEMPLATES_DIR);
         IAuthService authService = new AdminAuthService();
 
@@ -57,5 +62,30 @@ public class WebServerWithFilterBasedSecurity {
         var clientTemplate = new DataTemplateHibernate<>(Client.class);
         var dbServiceClient = new DbServiceClientImpl(transactionManager, clientTemplate);
         return dbServiceClient;
+    }
+
+    private static void initClients(DBServiceClient dbServiceClient) {
+        dbServiceClient.saveClient(
+            new Client(
+                null, "Путин В.В.",
+                new Address(null, "Россия"),
+                List.of(new Phone(null, "+1 234"))
+            )
+        );
+        dbServiceClient.saveClient(
+            new Client(
+                    null,"Зеленский В.",
+            new Address(null, "Украина"),
+            List.of(new Phone(null, "+9 234"))
+        ));
+
+        dbServiceClient.saveClient(
+                new Client(
+                        null,
+                        "Байден Дж.",
+                        new Address(null, "Пиндосия"),
+                        List.of(new Phone(null, "+5 678"))
+                )
+        );
     }
 }

@@ -54,7 +54,8 @@ public class ClientApiServlet extends HttpServlet {
     }
 
     private static  Client convertToNewClient(String name, String address, String phones) {
-        return new Client(null, name, new Address(null, address), Arrays.stream(phones.split(", ")).map(str -> new Phone(null, str)).toList());
+        return new Client(null, name, new Address(null, address), Arrays.stream(phones.split(", "))
+                .map(str -> new Phone(null, str)).toList());
     }
 
 }
