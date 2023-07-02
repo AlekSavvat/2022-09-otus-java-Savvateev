@@ -10,7 +10,7 @@ import ru.otus.crm.model.Client;
 import ru.otus.crm.model.Phone;
 import ru.otus.crm.service.DBServiceClient;
 import ru.otus.crm.service.DbServiceClientImpl;
-import ru.otus.server.IClientWebServer;
+import ru.otus.server.ClientWebServer;
 import ru.otus.server.ClientWebServerWithFilterBasedSecurity;
 import ru.otus.services.AdminAuthService;
 import ru.otus.services.IAuthService;
@@ -40,7 +40,7 @@ public class WebServerWithFilterBasedSecurity {
         TemplateProcessor templateProcessor = new TemplateProcessorImpl(TEMPLATES_DIR);
         IAuthService authService = new AdminAuthService();
 
-        IClientWebServer webServer = new ClientWebServerWithFilterBasedSecurity(WEB_SERVER_PORT,
+        ClientWebServer webServer = new ClientWebServerWithFilterBasedSecurity(WEB_SERVER_PORT,
                 authService, dbServiceClient, templateProcessor);
 
         webServer.start();

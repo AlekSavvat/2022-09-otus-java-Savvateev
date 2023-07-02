@@ -12,7 +12,7 @@ import ru.otus.services.TemplateProcessor;
 import ru.otus.servlet.ClientApiServlet;
 
 
-public class ClientWebServerSimple implements IClientWebServer {
+public class ClientWebServerSimple implements ClientWebServer {
     private static final String START_PAGE_NAME = "index.html";
     private static final String COMMON_RESOURCES_DIR = "static";
 

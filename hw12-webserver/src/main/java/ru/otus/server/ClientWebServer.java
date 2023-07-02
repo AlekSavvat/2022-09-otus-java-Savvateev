@@ -1,6 +1,6 @@
 package ru.otus.server;
 
-public interface IClientWebServer {
+public interface ClientWebServer {
     void start() throws Exception;
 
     void join() throws Exception;
