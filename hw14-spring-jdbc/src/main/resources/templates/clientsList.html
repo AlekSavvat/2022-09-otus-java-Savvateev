@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Clients List</title>
+
+    <style>
+        body {
+            background-color: #00ff7f;
+            font-family: Arial, sans-serif;
+            color: #4e4e4e;
+        }
+
+        .container {
+            margin: 20px auto;
+            width: 80%;
+            padding: 20px;
+            background-color: #f3efef;
+            border-radius: 5px;
+        }
+
+      table {
+        border-collapse: collapse;
+        width: 100%;
+        margin-top: 20px;
+      }
+
+      th,
+      td {
+        text-align: left;
+        padding: 8px;
+        border-bottom: 1px solid #4e4e4e;
+      }
+
+      th {
+        background-color: #4e4e4e;
+        color: #fff;
+      }
+
+      td a {
+        color: #4e4e4e;
+        text-decoration: none;
+        margin-right: 10px;
+      }
+
+      td a:hover {
+        text-decoration: underline;
+      }
+
+      .table-success {
+        background-color: #f3efef;
+      }
+
+        .btn-primary {
+        background-color: #4e4e4e;
+        color: #fff;
+        border: none;
+        padding: 10px 20px;
+        border-radius: 5px;
+        text-decoration: none;
+        margin-bottom: 20px;
+        display: inline-block;
+        }
+
+        .btn-primary:hover {
+        background-color: #fff;
+        color: #4e4e4e;
+        text-decoration: none;
+        border: 1px solid #4e4e4e;
+        }
+
+       .empty-list {
+        text-align: center;
+        font-style: italic;
+        margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <span th:if="${clients.size() == 0}" class="empty-list"
+    >Клиентов нет</span>
+    <div class="clients-list" th:unless="${clients.size() == 0}">
+        <h4>Список клиентов</h4>
+        <table id="client-table">
+            <thead>
+            <tr>
+                <th scope="col">ИД</th>
+                <th scope="col">Имя</th>
+                <th scope="col">Адрес</th>
+                <th scope="col">Телефоны</th>
+                <th scope="col">Редактировать</th>
+                <th scope="col">Удалить</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="client : ${clients}">
+                <td th:text="${client.id}"></td>
+                <td th:text="${client.name}"></td>
+                <td>
+<!--                    <span th:text="${client.address?.id}"></span>-->
+                    <span th:text="${client.address}"></span>
+                </td>
+                <td> <span th:text="${client.phones}"></span></td>
+                <td>
+                    <a
+                            type="button"
+                            style="
+                    background-color: #ffd6d6;
+                    color: #4e4e4e;
+                    border-color: #ffd6d6;
+                  "
+                            th:href="@{/clients/create(id=${client.id})}"
+                    >Редактировать</a
+                    >
+                </td>
+                <td>
+                    <a
+                            type="button"
+                            style="
+                    background-color: #ffd6d6;
+                    color: #4e4e4e;
+                    border-color: #ffd6d6;
+                  "
+                            th:href="@{/clients/delete(id=${client.id})}"
+                    >Удалить</a
+                    >
+                </td>
+            </tr>
+            </tbody>
+        </table>
+<!--        <div>-->
+<!--            <a th:href="@{/clients/create}" href="clientCreate.html">New client</a>-->
+<!--        </div>-->
+
+    </div>
+    <div class="container">
+        <a class="btn-primary" th:href="@{/clients/create}">Добавить</a>
+    </div>
+</div>
+</body>
+</html>

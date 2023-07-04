@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8" />
+  <title>Клиенты</title>
+  <style>
+      body {
+        background-color: #f3efef;
+        font-family: Arial, sans-serif;
+        color: #4e4e4e;
+      }
+
+      h1 {
+        font-size: 36px;
+        margin-top: 40px;
+        margin-bottom: 20px;
+        text-align: center;
+        font-weight: bold;
+      }
+
+      label {
+        font-size: 18px;
+        margin-bottom: 8px;
+        font-weight: bold;
+      }
+
+      input[type="text"] {
+        padding: 10px;
+        margin-bottom: 20px;
+        border-radius: 5px;
+        border: 1px solid #ccc;
+        font-size: 16px;
+        width: 400px;
+      }
+
+      button {
+        background-color: #ffd6d6;
+        border: none;
+        border-radius: 5px;
+        padding: 10px 30px;
+        font-size: 18px;
+        font-weight: bold;
+        cursor: pointer;
+        margin-top: 20px;
+      }
+
+      button:hover {
+        background-color: #ffb6b6;
+      }
+
+      .flex {
+        display: flex;
+        flex-direction: column;
+      }
+    </style>
+</head>
+<body>
+<div class="container">
+  <h1>Добавление нового клиента</h1>
+  <form th:action="@{/clients/create}" th:object="${client}" th:method="post">
+    <input type="hidden" th:field="*{id}" />
+    <div class="flex">
+      <label for="name-id">ФИО клиента</label>
+      <input type="text" id="name-id" name="name" th:field="*{name}" />
+    </div>
+    <div class="flex">
+      <label for="address-id">Адрес клиента</label>
+      <input type="text" id="address-id" name="street" th:field="*{address}" />
+    </div>
+    <div class="flex">
+      <label for="phones-id">Телефоны клиента</label>
+      <input type="text" id="phones-id" th:field="*{phones}" />
+    </div>
+    <button type="submit">Добавить клиента</button>
+  </form>
+</div>
+</body>
+</html>
