@@ -7,14 +7,13 @@ import ru.otus.protobuf.generated.GenerateSequenceMessage;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import java.util.concurrent.TimeUnit;
-import java.util.concurrent.atomic.AtomicLong;
 
 import static ru.otus.protobuf.common.SleepUtils.sleep;
 import static ru.otus.protobuf.common.GRPCAppConst.*;
 
 public class GRPCClient {
     private static final Logger log = LoggerFactory.getLogger(GRPCClient.class);
-    private static final AtomicLong currentValue = new AtomicLong(0);
+    private static Long currentValue = 0L;
 
     public static void main(String[] args) throws InterruptedException {
         log.info("Creating connection to {} on port:{}", SERVER_HOST, SERVER_PORT);
@@ -39,10 +38,16 @@ public class GRPCClient {
         remoteService.generateSequence(request, observer);
 
         for (long i = CLIENT_VALUE_FROM; i <= CLIENT_VALUE_TO; i++) {
-            currentValue.incrementAndGet();
+            currentValue++;
             log.info("step: {} current Value: {}" ,i
-                    , currentValue.updateAndGet(s -> s + observer.getLastAndReset()));
+                    , calculateCurrentValue(observer));
             sleep(TimeUnit.SECONDS, CLIENT_DELAY);
         }
+    }
+
+    private long calculateCurrentValue(ClientStreamObserver observer) {
+        var lastValue = observer.getLastAndReset();
+        currentValue += lastValue;
+        return currentValue;
     }
 }

@@ -6,6 +6,11 @@ import ru.otus.protobuf.generated.SequenceMessage;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.util.concurrent.TimeUnit;
+
+import static ru.otus.protobuf.common.SleepUtils.sleep;
+
+
 public class ClientStreamObserver implements StreamObserver<SequenceMessage> {
     private static final Logger log = LoggerFactory.getLogger(ClientStreamObserver.class);
     private long value = 0;
@@ -25,13 +30,13 @@ public class ClientStreamObserver implements StreamObserver<SequenceMessage> {
         log.info("Completed");
     }
 
-    public long getLastAndReset() {
+    public synchronized long getLastAndReset() {
         long returnedVal = this.value;
         this.value = 0;
         return returnedVal;
     }
 
-    private long setValue(long newValue){
+    private synchronized long setValue(long newValue){
         this.value = newValue;
         return value;
     }
