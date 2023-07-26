@@ -1,0 +1,43 @@
+package ru.otus.protobuf;
+
+import io.grpc.stub.StreamObserver;
+import ru.otus.protobuf.generated.SequenceMessage;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import java.util.concurrent.TimeUnit;
+
+import static ru.otus.protobuf.common.SleepUtils.sleep;
+
+
+public class ClientStreamObserver implements StreamObserver<SequenceMessage> {
+    private static final Logger log = LoggerFactory.getLogger(ClientStreamObserver.class);
+    private long value = 0;
+
+    @Override
+    public void onNext(SequenceMessage valueFromServer) {
+        setValue(valueFromServer.getNumber());
+        log.info("Got value from server: {}", value);
+    }
+
+    @Override
+    public void onError(Throwable e) {
+        log.error("Catch error: {}", e.toString());
+    }
+
+    @Override
+    public void onCompleted() {
+        log.info("Completed");
+    }
+
+    public synchronized long getLastAndReset() {
+        long returnedVal = this.value;
+        this.value = 0;
+        return returnedVal;
+    }
+
+    private synchronized void setValue(long newValue){
+        this.value = newValue;
+            }
+}
