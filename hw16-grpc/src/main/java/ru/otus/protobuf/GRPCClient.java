@@ -39,8 +39,8 @@ public class GRPCClient {
 
         for (long i = CLIENT_VALUE_FROM; i <= CLIENT_VALUE_TO; i++) {
             currentValue++;
-            log.info("step: {} current Value: {}" ,i
-                    , calculateCurrentValue(observer));
+            calculateCurrentValue(observer);
+            log.info("step: {} current Value: {}" ,i, currentValue);
             sleep(TimeUnit.SECONDS, CLIENT_DELAY);
         }
     }

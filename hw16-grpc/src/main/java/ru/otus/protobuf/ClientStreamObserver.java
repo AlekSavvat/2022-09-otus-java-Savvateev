@@ -17,7 +17,8 @@ public class ClientStreamObserver implements StreamObserver<SequenceMessage> {
 
     @Override
     public void onNext(SequenceMessage valueFromServer) {
-        log.info("Got value from server: {}", setValue(valueFromServer.getNumber()));
+        setValue(valueFromServer.getNumber());
+        log.info("Got value from server: {}", value);
     }
 
     @Override
@@ -36,8 +37,7 @@ public class ClientStreamObserver implements StreamObserver<SequenceMessage> {
         return returnedVal;
     }
 
-    private synchronized long setValue(long newValue){
+    private synchronized void setValue(long newValue){
         this.value = newValue;
-        return value;
-    }
+            }
 }
