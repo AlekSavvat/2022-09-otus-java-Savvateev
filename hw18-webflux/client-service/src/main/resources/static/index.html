@@ -5,6 +5,23 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link href="/webjars/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        button {
+            background-color: #00ff7f;
+            border: none;
+            border-radius: 5px;
+            padding: 10px 30px;
+            font-size: 18px;
+            font-weight: bold;
+            cursor: pointer;
+            margin-top: 20px;
+        }
+
+        button:hover {
+            background-color: #00cc66;
+        }
+
+    </style>
     <script src="/webjars/sockjs-client/sockjs.min.js"></script>
     <script src="/webjars/stomp-websocket/stomp.min.js"></script>
     <script src="/app.js"></script>
@@ -15,16 +32,14 @@
     Javascript and reload this page!</h2></noscript>
 <div id="main-content" class="container">
     <div class="row">
-        <div class="col-2">
+        <div class="col-auto">
             <input type="text" id="roomId" class="form-control" placeholder="chat room Id">
         </div>
-        <div class="col-1">
+        <div class="col-auto">
             <button id="connect" class="btn btn-default" onclick="connect()">Connect</button>
         </div>
-        <div class="col-1">
+        <div class="col-auto">
             <button id="disconnect" class="btn btn-default" onclick="disconnect()" disabled="disabled">Disconnect</button>
-        </div>
-        <div class="col-8">
         </div>
     </div>
     <div class="row">
@@ -34,12 +49,11 @@
     </div>
     <div class="row">
         <div class="col">
-            <input type="text" id="message" class="form-control" placeholder="type a message...">
+            <input type="text" id="message" class="form-control" placeholder="type a message..."
+                   onkeydown = "if (event.keyCode == 13){ sendMsg()}">
         </div>
-    </div>
-    <div class="row">
         <div class="col">
-            <button id="send" class="btn btn-default" onclick="sendMsg()">Send</button>
+            <button id="send" onclick="sendMsg()">Send</button>
         </div>
     </div>
 

@@ -22,6 +22,7 @@ public class MessageController {
     private static final Logger logger = LoggerFactory.getLogger(MessageController.class);
 
     private static final String TOPIC_TEMPLATE = "/topic/response.";
+    private static final String SPECIAL_ROOM = "1408";
 
     private final WebClient datastoreClient;
     private final SimpMessagingTemplate template;
@@ -34,11 +35,16 @@ public class MessageController {
     @MessageMapping("/message.{roomId}")
     public void getMessage(@DestinationVariable String roomId, Message message) {
         logger.info("get message:{}, roomId:{}", message, roomId);
-        saveMessage(roomId, message)
-                .subscribe(msgId -> logger.info("message send id:{}", msgId));
+        if(!roomId.equals(SPECIAL_ROOM)) {
+            saveMessage(roomId, message)
+                    .subscribe(msgId -> logger.info("message send id:{}", msgId));
 
-        template.convertAndSend(String.format("%s%s", TOPIC_TEMPLATE, roomId),
+            template.convertAndSend(String.format("%s%s", TOPIC_TEMPLATE, roomId),
                 new Message(HtmlUtils.htmlEscape(message.messageStr())));
+
+            template.convertAndSend(String.format("%s%s", TOPIC_TEMPLATE, SPECIAL_ROOM),
+                    new Message(HtmlUtils.htmlEscape(String.format("room %s: %s", roomId, message.messageStr()))));
+        }
     }
 
 
@@ -68,13 +74,14 @@ public class MessageController {
 
     private Mono<Long> saveMessage(String roomId, Message message) {
         return datastoreClient.post().uri(String.format("/msg/%s", roomId))
-                .accept(MediaType.APPLICATION_JSON)
-                .bodyValue(message)
-                .exchangeToMono(response -> response.bodyToMono(Long.class));
+            .accept(MediaType.APPLICATION_JSON)
+            .bodyValue(message)
+            .exchangeToMono(response -> response.bodyToMono(Long.class));
     }
 
     private Flux<Message> getMessagesByRoomId(long roomId) {
-        return datastoreClient.get().uri(String.format("/msg/%s", roomId))
+        return datastoreClient.get()
+                .uri( roomId == Long.parseLong(SPECIAL_ROOM)? "/list" :String.format("/msg/%s", roomId))
                 .accept(MediaType.APPLICATION_NDJSON)
                 .exchangeToFlux(response -> {
                     if (response.statusCode().equals(HttpStatus.OK)) {

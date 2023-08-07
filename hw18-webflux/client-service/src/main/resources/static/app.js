@@ -13,6 +13,11 @@ const setConnected = (connected) => {
     disconnectBtn.disabled = !connected;
     const chatLine = document.getElementById(chatLineElementId);
     chatLine.hidden = !connected;
+
+    var rowCount = chatLine.rows.length;
+    for (var i = 1; i <= rowCount; i++) {
+        chatLine.deleteRow(0);
+    }
 }
 
 const connect = () => {
@@ -37,6 +42,7 @@ const disconnect = () => {
 const sendMsg = () => {
     const roomId = document.getElementById(roomIdElementId).value;
     const message = document.getElementById(messageElementId).value;
+    document.getElementById(messageElementId).value = "";
     stompClient.send(`/app/message.${roomId}`, {}, JSON.stringify({'messageStr': message}))
 }
 

@@ -3,11 +3,11 @@ server:
 
 spring:
   r2dbc:
-    url: r2dbc:postgresql://192.168.0.56:5432/demoDB
+    url: r2dbc:postgresql://localhost:5430/demoDB
     username: usr
     password: pwd
   flyway:
-    url: jdbc:postgresql://192.168.0.56:5432/demoDB
+    url: jdbc:postgresql://localhost:5430/demoDB
     user: usr
     password: pwd
 
